@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles'
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -41,6 +42,7 @@ export function Navbar() {
                 {...{
                   key: label,
                   color: "inherit",
+                  component: Link,
                   to: href,
                 }}
               >
