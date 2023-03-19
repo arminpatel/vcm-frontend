@@ -2,9 +2,9 @@ name: React Build Verify
 run-name: Testing if the project is building correctly 🚀
 on: 
   push :
-    branches: [ master ]
+    branches: [ main ]
   pull_request : 
-    branches: [ master ]
+    branches: [ main ]
 
 
 jobs:
