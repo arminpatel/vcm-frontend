@@ -1,5 +1,7 @@
 name: React Build Verify
 run-name: Testing if the project is building correctly 🚀
+
+
 on: 
   push :
     branches: [ main ]
@@ -11,8 +13,8 @@ jobs:
   build:
     name: React Build Test
     runs-on: ubuntu-latest
-    steps:
 
+    steps:
       - name: Check out repository code
         uses: actions/checkout@v3
 
@@ -23,3 +25,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
+
+      - name: build the file
+        run: npm run dev
