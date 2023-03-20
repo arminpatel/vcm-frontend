@@ -27,4 +27,4 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: build the file
-        run: npm run dev
+        run: npm run dev --if-present
