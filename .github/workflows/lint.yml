@@ -14,22 +14,21 @@ permissions:
   contents: write
 
 jobs:
-  run-linters:
+  run_linters:
     name: Run linters
     runs-on: Ubuntu-latest
 
-  steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v3
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 18
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    - name: Install Node.js dependencies
-      run: npm ci
+      - name: Install Node.js dependencies
+        run: npm install --legacy-peer-deps
 
-    - name: Run linters
-        - npm run format
-        - npm run lint
+      - run: npm run format
+      - run: npm run lint
