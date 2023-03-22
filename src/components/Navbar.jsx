@@ -30,7 +30,7 @@ export function Navbar() {
   const classes = useStyles();
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={classes.navbar}>
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
           {" "}

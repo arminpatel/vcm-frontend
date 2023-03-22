@@ -5,8 +5,8 @@ import CreateContest from "./pages/CreateContest";
 export function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home/>}/>
-      <Route path="/create-contest" element={<CreateContest/>}/>
+      <Route path="/" element={<Home />} />
+      <Route path="/create-contest" element={<CreateContest />} />
     </Routes>
   );
 }
