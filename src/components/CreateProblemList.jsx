@@ -2,8 +2,15 @@ import React from "react";
 import { Typography, Button, Grid } from "@mui/material";
 import CreateProblem from "./CreateProblem";
 
-
-const CreateProblemList = ({ problemCount }) => {
+const CreateProblemList = ({
+  addProblem,
+  removeProblem,
+  addProblemName,
+  addProblemLink,
+  addProblemScore,
+  problemCount,
+  problems,
+}) => {
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -11,14 +18,24 @@ const CreateProblemList = ({ problemCount }) => {
           PROBLEMS
         </Typography>
 
-        <Button variant="contained" align="right">
+        <Button variant="contained" align="right" onClick={addProblem}>
           Add Problem
         </Button>
       </div>
 
       <Grid container spacing={2}>
-        <CreateProblem />
-
+        {problems.map((problem) => {
+          return (
+            <CreateProblem
+              key={problem.id}
+              problem={problem}
+              removeProblem={removeProblem}
+              addProblemName={addProblemName}
+              addProblemLink={addProblemLink}
+              addProblemScore={addProblemScore}
+            />
+          );
+        })}
         <Typography mt={3} variant="h6">
           Total Problems: {problemCount}
         </Typography>
