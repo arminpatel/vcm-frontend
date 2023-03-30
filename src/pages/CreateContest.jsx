@@ -1,7 +1,14 @@
 import React from "react";
+import { Navbar } from "../components/Navbar";
+import CreateContestForm from "../components/CreateContestForm";
 
 const CreateContest = () => {
-  return <h1>This is a contest page</h1>;
+  return (
+    <>
+      <Navbar />
+      <CreateContestForm />
+    </>
+  );
 };
 
 export default CreateContest;
