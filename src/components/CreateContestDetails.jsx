@@ -6,10 +6,10 @@ const CreateContestDetails = ({
   addContestName,
   addContestDate,
   addContestTime,
+  addContestDuration
 }) => {
   return (
     <>
-
       <Typography variant="h5" align="left">
         CONTEST DETAILS
       </Typography>
@@ -25,8 +25,8 @@ const CreateContestDetails = ({
             required
           />
         </Grid>
-        
-        <Grid item sm={6}>
+
+        <Grid item sm={4}>
           <DatePicker
             id="contest-date"
             label="Contest Start Date"
@@ -35,11 +35,21 @@ const CreateContestDetails = ({
           />
         </Grid>
 
-        <Grid item sm={6}>
+        <Grid item sm={4}>
           <TimePicker
             id="contest-time"
             label="Contest Start Time"
             onChange={addContestTime}
+            required
+          />
+        </Grid>
+
+        <Grid item sm={4}>
+          <TextField
+            id="contest-duration"
+            label="Duration (mins)"
+            onChange={addContestDuration}
+            type="number"
             required
           />
         </Grid>

@@ -12,6 +12,7 @@ const CreateContestForm = () => {
   const [contestName, setContestName] = useState("");
   const [contestStartTime, setContestStartTime] = useState();
   const [contestStartDate, setContestStartDate] = useState();
+  const [contestDuration, setContestDuration] = useState(0);
   const [problemCount, setProblemCount] = useState(2);
   const [problems, setProblems] = useState([
     {
@@ -31,6 +32,7 @@ const CreateContestForm = () => {
   const addContestName = (event) => setContestName(event.target.value);
   const addContestDate = (date) => setContestStartDate(date);
   const addContestTime = (time) => setContestStartTime(time);
+  const addContestDuration = (event) => setContestDuration(+event.target.value);
 
   const addProblem = () => {
     if (problemCount > 100) {
@@ -90,7 +92,7 @@ const CreateContestForm = () => {
 
   const submitForm = () => {
     //TODO: Add API POST REQUEST HERE
-    console.log(contestName, contestStartDate, contestStartTime);
+    console.log(contestName, contestStartDate, contestStartTime, contestDuration);
     console.log(problems);
   };
 
@@ -109,6 +111,7 @@ const CreateContestForm = () => {
             addContestName={addContestName}
             addContestDate={addContestDate}
             addContestTime={addContestTime}
+            addContestDuration={addContestDuration}
           />
         </CardContent>
       </Card>
