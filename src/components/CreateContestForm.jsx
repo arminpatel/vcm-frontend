@@ -6,7 +6,6 @@ import getMaxId from "../utils/getMaxId";
 import { useNavigate } from "react-router-dom";
 
 const CreateContestForm = () => {
-  
   const navigate = useNavigate();
 
   const [contestName, setContestName] = useState("");
@@ -19,14 +18,14 @@ const CreateContestForm = () => {
       id: 1,
       name: "",
       link: "",
-      score: 0,
+      score: 0
     },
     {
       id: 2,
       name: "",
       link: "",
-      score: 0,
-    },
+      score: 0
+    }
   ]);
 
   const addContestName = (event) => setContestName(event.target.value);
@@ -35,7 +34,7 @@ const CreateContestForm = () => {
   const addContestDuration = (event) => setContestDuration(+event.target.value);
 
   const addProblem = () => {
-    if (problemCount > 100) {
+    if (problemCount >= 100) {
       alert("Reached maximum problem Limit");
       return;
     }
@@ -48,14 +47,14 @@ const CreateContestForm = () => {
     if (problemCount == 2) return;
     setProblemCount(problemCount - 1);
 
-    const tproblems = problems.filter((problem) => {
+    const tempProblems = problems.filter((problem) => {
       return problem.id !== problemId;
     });
-    setProblems(tproblems);
+    setProblems(tempProblems);
   };
 
   const addProblemName = (problemId, name) => {
-    const tproblems = problems.map((problem) => {
+    const tempProblems = problems.map((problem) => {
       if (problem.id !== problemId) {
         return problem;
       } else {
@@ -63,11 +62,11 @@ const CreateContestForm = () => {
         return problem;
       }
     });
-    setProblems(tproblems);
+    setProblems(tempProblems);
   };
 
   const addProblemLink = (problemId, link) => {
-    const tproblems = problems.map((problem) => {
+    const tempProblems = problems.map((problem) => {
       if (problem.id !== problemId) {
         return problem;
       } else {
@@ -75,11 +74,11 @@ const CreateContestForm = () => {
         return problem;
       }
     });
-    setProblems(tproblems);
+    setProblems(tempProblems);
   };
 
   const addProblemScore = (problemId, score) => {
-    const tproblems = problems.map((problem) => {
+    const tempProblems = problems.map((problem) => {
       if (problem.id !== problemId) {
         return problem;
       } else {
@@ -87,18 +86,22 @@ const CreateContestForm = () => {
         return problem;
       }
     });
-    setProblems(tproblems);
+    setProblems(tempProblems);
   };
 
   const submitForm = () => {
     //TODO: Add API POST REQUEST HERE
-    console.log(contestName, contestStartDate, contestStartTime, contestDuration);
+    console.log(
+      contestName,
+      contestStartDate,
+      contestStartTime,
+      contestDuration
+    );
     console.log(problems);
   };
 
   return (
     <form>
-      
       <Typography variant="h2" align="center" mt={10}>
         Create Your Contest
       </Typography>
@@ -136,15 +139,16 @@ const CreateContestForm = () => {
         style={{
           width: "100%",
           display: "flex",
-          justifyContent: "space-evenly",
+          justifyContent: "space-evenly"
         }}
       >
         <Button variant="contained" onClick={submitForm}>
           Create Contest
         </Button>
-        <Button variant="contained" onClick={()=> navigate('/')}>Go Back Home</Button>
+        <Button variant="contained" onClick={() => navigate("/")}>
+          Go Back Home
+        </Button>
       </div>
-
     </form>
   );
 };

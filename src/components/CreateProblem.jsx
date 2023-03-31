@@ -7,7 +7,7 @@ const CreateProblem = ({
   removeProblem,
   addProblemName,
   addProblemLink,
-  addProblemScore
+  addProblemScore,
 }) => {
   return (
     <>

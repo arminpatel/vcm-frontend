@@ -6,7 +6,7 @@ const CreateContestDetails = ({
   addContestName,
   addContestDate,
   addContestTime,
-  addContestDuration
+  addContestDuration,
 }) => {
   return (
     <>
