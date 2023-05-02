@@ -21,8 +21,8 @@ const menuData = [
     href: "/create-contest",
   },
   {
-    label: "Sign Up",
-    href: "/sign-up",
+    label: "Login",
+    href: "/login",
   },
 ];
 
