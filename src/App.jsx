@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Signup } from "./pages/Signup";
+import { Profile } from "./pages/Profile";
 
 export function App() {
   return (
@@ -16,6 +17,7 @@ export function App() {
         <Route path="/contest" element={<Contest />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </LocalizationProvider>
   );
