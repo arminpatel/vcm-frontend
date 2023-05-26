@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
+import { Link as RouterLink } from 'react-router-dom'
 
 export const Signup = () => {
   const [email, setEmail] = useState('')
@@ -73,7 +74,7 @@ export const Signup = () => {
           >
             Sign In
           </Button>
-          <Link href="/login" variant="body2">
+          <Link component={RouterLink} to="/login" variant="body2">
             Already have an account? Sign in
           </Link>
         </Box>
