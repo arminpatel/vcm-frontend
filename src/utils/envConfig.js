@@ -1,5 +1,5 @@
 const config = {
-  API_URL: import.meta.env.PROD ? 'http://arminpatel.pythonanywhere.com/' : 'http://localhost:8000/',
+  apiUrl : import.meta.env.PROD ? 'https://arminpatel.pythonanywhere.com' : 'http://127.0.0.1:8000',
 }
 
 export default config
