@@ -10,6 +10,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function Login() {
   const [emailOrUsername, setEmailOrUsername] = useState('');
@@ -64,7 +65,7 @@ export default function Login() {
               />} 
             label="Remember me" />
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} >Log In</Button>
-          <Link href="/sign-up" variant="body2" sx={{ ml: "auto"}} >
+          <Link component={RouterLink} to="/sign-up" variant="body2" sx={{ ml: "auto"}} >
             {"Don't have an account? Sign Up"}
           </Link>
         </Box>
