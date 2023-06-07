@@ -2,7 +2,6 @@ import axios from "axios"
 import Cookies from "js-cookie"
 import config from "./envConfig"
 import { history } from "../main"
-
 const configureAxios = () => {
   axios.defaults.baseURL = config.apiUrl
   axios.interceptors.request.use(
@@ -33,13 +32,19 @@ const configureAxios = () => {
             const response = await axios.post("/api/token/refresh/", {
               refresh: Cookies.get("refresh"),
             })
-            const { access, refresh } = response.data
+            const { access } = response.data
             Cookies.set("access", access)
-            Cookies.set("refresh", refresh)
             originalRequest.headers["Authorization"] = `Bearer ${access}`
             return axios(originalRequest)
           } catch (err) {
-            history.push("/login")
+            if(originalRequest.url.includes("/api/token/refresh")) {
+              return Promise.reject(error)
+            } else {
+              Cookies.remove("access")
+              Cookies.remove("refresh")
+              history.push("/login")
+              history.go(0)
+            }
           }
         }
 
