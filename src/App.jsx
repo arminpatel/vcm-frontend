@@ -21,7 +21,7 @@ export function App() {
         <Route path="/contest" element={<Contest />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:username" element={<Profile />} />
       </Routes>
       </QueryClientProvider>
     </LocalizationProvider>
