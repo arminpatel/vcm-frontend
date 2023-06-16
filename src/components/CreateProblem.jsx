@@ -40,6 +40,7 @@ const CreateProblem = ({
           onChange={(event) => {
             addProblemScore(problem.id, event.target.value);
           }}
+          type={"number"}
           fullWidth
           required
         ></TextField>

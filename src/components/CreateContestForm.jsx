@@ -4,13 +4,15 @@ import CreateContestDetails from "./CreateContestDetails";
 import CreateProblemList from "./CreateProblemList";
 import getMaxId from "../utils/getMaxId";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { Navigate } from "react-router-dom";
 
 const CreateContestForm = () => {
   const navigate = useNavigate();
 
   const [contestName, setContestName] = useState("");
-  const [contestStartTime, setContestStartTime] = useState();
-  const [contestStartDate, setContestStartDate] = useState();
+  const [contestStartDateAndTime, setContestStartDateAndTime] = useState();
   const [contestDuration, setContestDuration] = useState(0);
   const [problemCount, setProblemCount] = useState(2);
   const [problems, setProblems] = useState([
@@ -18,19 +20,18 @@ const CreateContestForm = () => {
       id: 1,
       name: "",
       link: "",
-      score: 0
+      score: 0,
     },
     {
       id: 2,
       name: "",
       link: "",
-      score: 0
-    }
+      score: 0,
+    },
   ]);
 
   const addContestName = (event) => setContestName(event.target.value);
-  const addContestDate = (date) => setContestStartDate(date);
-  const addContestTime = (time) => setContestStartTime(time);
+  const addContestDateAndTime = (date) => setContestStartDateAndTime(date);
   const addContestDuration = (event) => setContestDuration(+event.target.value);
 
   const addProblem = () => {
@@ -89,17 +90,89 @@ const CreateContestForm = () => {
     setProblems(tempProblems);
   };
 
-  const submitForm = () => {
-    //TODO: Add API POST REQUEST HERE
-    console.log(
-      contestName,
-      contestStartDate,
-      contestStartTime,
-      contestDuration
-    );
-    console.log(problems);
+  const contestCreationMutation = useMutation({
+    mutationFn: (data) => {
+      return axios.post("api/contests/", data);
+    },
+  });
+
+  const validateForm = () => {
+    if (!contestName || !contestStartDateAndTime || !contestDuration) {
+      window.alert("The Contest Detail Field cannot be empty");
+      return false;
+    }
+
+    let flag = "allCorrect";
+    problems.forEach((problem) => {
+      if (!problem.name || !problem.link || !problem.score) {
+        flag = "problemDetailIncorrect";
+        return;
+      }
+      let score = Number(problem.score);
+      if (isNaN(score) || score < 0 || score > 10000) {
+        flag = "problemScoreIncorrect";
+        return;
+      }
+      let url;
+      try {
+        url = new URL(problem.link);
+      } catch (e) {
+        flag = "problemURLIncorrect";
+        return;
+      }
+      if (url.protocol !== "http:" && url.protocol !== "https:") {
+        flag = "problemLinkFormatIncorrect";
+      }
+    });
+
+    if (flag === "problemDetailIncorrect") {
+      window.alert("Problem Detail Field cannot be empty");
+      return false;
+    } else if (flag === "problemURLIncorrect") {
+      window.alert("The Problem link is not a URL");
+      return false;
+    } else if (flag === "problemLinkFormatIncorrect") {
+      window.alert(
+        "The Problem link is not correctly formatted, please enter a http: or https: link"
+      );
+      return false;
+    } else if (flag === "problemScoreIncorrect") {
+      window.alert("The problem score must be between 0 and 10000");
+      return false;
+    }
+    return true;
   };
 
+  const submitForm = (e) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+    let contestStartDateObject = new Date(contestStartDateAndTime);
+    let contestStartDateString = contestStartDateObject.toISOString();
+    let nwproblems = problems.map((problem) => {
+      // eslint-disable-next-line no-unused-vars
+      let { id: _, ...rest } = problem;
+      return rest;
+    });
+
+    const contestdetails = {
+      name: contestName,
+      start_date_time: contestStartDateString,
+      duration: contestDuration,
+      problems: nwproblems,
+    };
+
+    contestCreationMutation.mutate(contestdetails);
+  };
+
+  if (contestCreationMutation.isSuccess) {
+    let contestid = contestCreationMutation.data.data.id;
+    return <Navigate to={`/contest/${contestid}`} />;
+  }
+  if (contestCreationMutation.isError) {
+    return <div>Some Error Occured </div>;
+  }
   return (
     <form>
       <Typography variant="h2" align="center" mt={10}>
@@ -112,8 +185,7 @@ const CreateContestForm = () => {
         <CardContent>
           <CreateContestDetails
             addContestName={addContestName}
-            addContestDate={addContestDate}
-            addContestTime={addContestTime}
+            addContestDateAndTime={addContestDateAndTime}
             addContestDuration={addContestDuration}
           />
         </CardContent>
@@ -139,7 +211,7 @@ const CreateContestForm = () => {
         style={{
           width: "100%",
           display: "flex",
-          justifyContent: "space-evenly"
+          justifyContent: "space-evenly",
         }}
       >
         <Button variant="contained" onClick={submitForm}>
