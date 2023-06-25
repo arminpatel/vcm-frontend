@@ -18,10 +18,10 @@ export function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create-contest" element={<CreateContest />} />
-        <Route path="/contest" element={<Contest />} />
+        <Route path="/contest/:contestId" element={<Contest />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:username" element={<Profile />} />
       </Routes>
       </QueryClientProvider>
     </LocalizationProvider>

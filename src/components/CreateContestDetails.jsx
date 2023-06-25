@@ -1,11 +1,10 @@
 import React from "react";
 import { Typography, Grid, TextField } from "@mui/material";
-import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+import { DateTimePicker } from "@mui/x-date-pickers";
 
 const CreateContestDetails = ({
   addContestName,
-  addContestDate,
-  addContestTime,
+  addContestDateAndTime,
   addContestDuration,
 }) => {
   return (
@@ -26,20 +25,12 @@ const CreateContestDetails = ({
           />
         </Grid>
 
-        <Grid item sm={4}>
-          <DatePicker
-            id="contest-date"
-            label="Contest Start Date"
-            onChange={addContestDate}
-            required
-          />
-        </Grid>
-
-        <Grid item sm={4}>
-          <TimePicker
-            id="contest-time"
-            label="Contest Start Time"
-            onChange={addContestTime}
+        <Grid item xs={6} sm={6}>
+          <DateTimePicker
+            id="contest-date-and-time"
+            label="Contest Start Date and Time"
+            slotProps={{ textField: { fullWidth: true } }}
+            onChange={addContestDateAndTime}
             required
           />
         </Grid>

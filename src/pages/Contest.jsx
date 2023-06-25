@@ -7,6 +7,9 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -34,52 +37,23 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const data = {
-  title: "VCM TEST CONTEST",
-  deadline: "April, 30, 2023",
-  problems: [
-    {
-      name: "Problem 1",
-      link: "https://codeforces.com/contest/1807/problem/A",
-      isSolved: false,
-    },
-    {
-      name: "Problem 2",
-      link: "https://codeforces.com/contest/1807/problem/B",
-      isSolved: true,
-    },
-    {
-      name: "Problem 3",
-      link: "https://codeforces.com/contest/1807/problem/C",
-      isSolved: false,
-    },
-    {
-      name: "Problem 4",
-      link: "https://codeforces.com/contest/1807/problem/D",
-      isSolved: true,
-    },
-    {
-      name: "Problem 5",
-      link: "https://codeforces.com/contest/1807/problem/E",
-      isSolved: false,
-    },
-    {
-      name: "Problem 6",
-      link: "https://codeforces.com/contest/1807/problem/F",
-      isSolved: false,
-    },
-  ],
-};
-
 const Contest = () => {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const { contestId } = useParams();
+  const { status, data, error } = useQuery(["contest"], async () => {
+    const res = await axios.get(`api/contests/${contestId}`);
+    return res.data;
+  });
 
   const getTime = () => {
-    const time = Date.parse(data.deadline) - Date.now();
-
+    const durHours = Number(data.duration.slice(0, 2));
+    const durMins = Number(data.duration.slice(3, 5));
+    const endtime =
+      Date.parse(data.start_date_time) + 360000 * durHours + 60000 * durMins;
+    const time = endtime - Date.now();
     setDays(Math.floor(time / (1000 * 60 * 60 * 24)));
     setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
     setMinutes(Math.floor((time / 1000 / 60) % 60));
@@ -90,9 +64,12 @@ const Contest = () => {
     const interval = setInterval(() => getTime(), 1000);
 
     return () => clearInterval(interval);
-  }, []);
-
+  }, [data]);
   const classes = useStyles();
+
+  if (status === "loading") return <div>Loading...</div>;
+  if (error) return <div>Some error Occured </div>;
+
   return (
     <div>
       <Navbar />
@@ -121,7 +98,7 @@ const Contest = () => {
         </div>
         <div className={classes.sidebar}>
           <div className={classes.contestTitle}>
-            <Typography variant="h5">{data.title}</Typography>
+            <Typography variant="h5">{data.name}</Typography>
           </div>
           <Divider />
           <div className={classes.timer}>
