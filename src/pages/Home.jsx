@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar } from "../components/Navbar";
+import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as CodingIllustration } from "../../assets/landingpageillustrationblue.svg";
 
@@ -36,6 +37,7 @@ const Home = () => {
           <CodingIllustration className="h-full w-full "/>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
