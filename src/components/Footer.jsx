@@ -9,6 +9,7 @@ const Footer = () => {
                   Attribution 
                 </span>
                 <a href="https://storyset.com/work">Work illustrations by Storyset</a>
+                <a href="https://storyset.com/people">People illustrations by Storyset</a>
                 <p>icons by <a href="https://icons8.com">Icons8</a></p> 
             </div> 
             <div className="justify-self-end"> 
