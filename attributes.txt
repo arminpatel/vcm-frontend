@@ -1,2 +1,5 @@
 Landing Page svg
 <a href="https://storyset.com/work">Work illustrations by Storyset</a>
+
+Error Pages svg 
+<a href="https://storyset.com/people">People illustrations by Storyset</a>
