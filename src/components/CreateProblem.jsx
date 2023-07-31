@@ -1,5 +1,4 @@
 import React from "react";
-import { Grid, TextField, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 const CreateProblem = ({
@@ -10,51 +9,31 @@ const CreateProblem = ({
   addProblemScore,
 }) => {
   return (
-    <>
-      <Grid item xs={4} sm={4} mt={3}>
-        <TextField
-          id="problem-name"
-          label="Problem Name"
-          onChange={(event) => {
-            addProblemName(problem.id, event.target.value);
-          }}
-          fullWidth
-          required
-        />
-      </Grid>
-      <Grid item xs={4} sm={4} mt={3}>
-        <TextField
-          id="problem-link"
-          label="Problem Link"
-          onChange={(event) => {
-            addProblemLink(problem.id, event.target.value);
-          }}
-          fullWidth
-          required
-        ></TextField>
-      </Grid>
-      <Grid item xs={3} sm={3} mt={3}>
-        <TextField
-          id="problem-score"
-          label="Score"
-          onChange={(event) => {
-            addProblemScore(problem.id, event.target.value);
-          }}
-          type={"number"}
-          fullWidth
-          required
-        ></TextField>
-      </Grid>
-      <Grid item xs={1} sm={1} mt={3}>
-        <Button
-          variant="contained"
-          color="error"
-          onClick={() => removeProblem(problem.id)}
-        >
+    <div className="flex gap-4">
+      <input id="problem-name" placeholder="Problem Name" className="rounded p-2"
+        onChange={(event) => {
+          addProblemName(problem.id, event.target.value);
+        }}
+        required
+      />
+      <input id="problem-link" placeholder="Problem Link" className="rounded p-2"
+        onChange={(event) => {
+          addProblemLink(problem.id, event.target.value);
+        }}
+        required
+      />
+      <input id="problem-score" type="number" placeholder="Score" className="rounded p-2"
+        onChange={(event) => {
+          addProblemScore(problem.id, event.target.value);
+        }}
+        required
+      />
+      <div>
+        <div className = "btn btn-error" onClick={() => removeProblem(problem.id)} >
           <CloseIcon fontSize="medium" />
-        </Button>
-      </Grid>
-    </>
+        </div>
+      </div>
+    </div>
   );
 };
 
