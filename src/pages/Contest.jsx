@@ -1,38 +1,10 @@
 import { Navbar } from "./../components/Navbar";
 import Footer from "./../components/Footer";
 import { makeStyles } from "@mui/styles";
-import Typography from "@mui/material/Typography";
 import { useState, useEffect } from "react";
-import Divider from "@mui/material/Divider";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-const useStyles = makeStyles(() => ({
-  container: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  mainPage: {
-    width: "80vw",
-    height: "75vh",
-  },
-  sidebar: {
-    flexGrow: 1,
-    height: "75vh",
-  },
-  contestTitle: {
-    textAlign: "center",
-    padding: "10px 0",
-  },
-  timer: {
-    textAlign: "center",
-    padding: "10px 0",
-  },
-  solvedProblem: {
-    background: "#DBECC9",
-  },
-}));
 
 const Contest = () => {
   const [days, setDays] = useState(0);
@@ -64,8 +36,6 @@ const Contest = () => {
 
     return () => clearInterval(interval);
   });
-
-  const classes = useStyles();
 
   if (status === "loading") return <div>Loading...</div>;
   if (error) return <div>Some error Occured </div>;
@@ -113,17 +83,16 @@ const Contest = () => {
             </tbody>
           </table>
         </div>
-        <div className={classes.sidebar}>
-          <div className={classes.contestTitle}>
-            <Typography variant="h5">{data.name}</Typography>
+        <div className="grow h-[75vh]">
+          <div className="text-center pl-[10px]">
+            <div className="text-xl">{data.name}</div>
           </div>
-          <Divider />
-          <div className={classes.timer}>
-            <Typography>
+          <div className="text-center pl-[10px]">
+            <div>
               {days} days {hours} hours
               <br />
               {minutes} minutes {seconds} seconds
-            </Typography>
+            </div>
             <div className="radial-progress text-green-500 mt-[5rem]" style={{"--value":solvedCount/problemsCount * 100, "--size": "7rem"}}> { solvedCount + " / " +  problemsCount}</div>
           </div>
         </div>
