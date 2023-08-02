@@ -1,5 +1,4 @@
 import React from "react";
-import { Typography, Button, Grid } from "@mui/material";
 import CreateProblem from "./CreateProblem";
 
 const CreateProblemList = ({
@@ -13,17 +12,17 @@ const CreateProblemList = ({
 }) => {
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h5" align="left">
+      <div className="flex justify-between mb-4">
+        <div className="text-xl">
           PROBLEMS
-        </Typography>
+        </div>
 
-        <Button variant="contained" align="right" onClick={addProblem}>
+        <div className="btn" onClick={addProblem}> 
           Add Problem
-        </Button>
+        </div>
       </div>
 
-      <Grid container spacing={2}>
+      <div className="flex flex-col gap-4">
         {problems.map((problem) => {
           return (
             <CreateProblem
@@ -36,10 +35,10 @@ const CreateProblemList = ({
             />
           );
         })}
-        <Typography mt={3} variant="h6">
+        <div className="text-lg">
           Total Problems: {problemCount}
-        </Typography>
-      </Grid>
+        </div>
+      </div>
     </>
   );
 };
