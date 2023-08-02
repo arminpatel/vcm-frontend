@@ -1,12 +1,9 @@
 import { Navbar } from "./../components/Navbar";
+import Footer from "./../components/Footer";
 import { makeStyles } from "@mui/styles";
 import Typography from "@mui/material/Typography";
 import { useState, useEffect } from "react";
 import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -48,6 +45,8 @@ const Contest = () => {
     return res.data;
   });
 
+  var problemsCount = 0, solvedCount = 0;
+
   const getTime = () => {
     const durHours = Number(data.duration.slice(0, 2));
     const durMins = Number(data.duration.slice(3, 5));
@@ -64,37 +63,55 @@ const Contest = () => {
     const interval = setInterval(() => getTime(), 1000);
 
     return () => clearInterval(interval);
-  }, [data]);
+  });
+
   const classes = useStyles();
 
   if (status === "loading") return <div>Loading...</div>;
   if (error) return <div>Some error Occured </div>;
 
+  if(data) {
+    problemsCount = data.problems.length;
+    data.problems.forEach(({isSolved}) => {
+      if(isSolved) solvedCount++;
+    });
+  }
+
   return (
     <div>
       <Navbar />
-      <div className={classes.container}>
-        <div className={classes.mainPage}>
-          <List sx={{ padding: "10px" }} dense>
-            {data.problems.map(({ name, link, isSolved }) => {
-              return (
-                <>
-                  <ListItem
-                    key={link}
-                    className={
-                      classes.listItem +
-                      (isSolved ? " " + classes.solvedProblem : null)
-                    }
-                  >
-                    <ListItemButton component="a" href={link}>
-                      <ListItemText primary={name} />
-                    </ListItemButton>
-                  </ListItem>
-                  <Divider />
-                </>
-              );
-            })}
-          </List>
+      <div className="flex justify-between pt-[5rem]">
+        <div className="overflow-x-auto w-[80vw] px-[3rem]">
+          <table className="table text-lg">
+            <thead className="text-xl pb-[5rem]">
+              <tr>
+                <th></th>
+                <th>Problem Name</th>
+                <th>Check</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.problems.map(({name, link, isSolved}, ind) => { 
+                return (
+                  <tr key={link} className={isSolved ? "bg-green-600 text-white" : "bg-base-300"}>
+                    <td>{ind+1}</td>
+                    <td>
+                      <a href={link} target="_blank" rel="noreferrer">
+                        {name}
+                      </a>
+                    </td>
+                    <td>
+                      {isSolved ? (
+                        <div className="btn text-2xl"> ✅ </div>
+                      ) : (
+                        <div className="btn text-2xl"> 🔍 </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
         <div className={classes.sidebar}>
           <div className={classes.contestTitle}>
@@ -107,9 +124,11 @@ const Contest = () => {
               <br />
               {minutes} minutes {seconds} seconds
             </Typography>
+            <div className="radial-progress text-green-500 mt-[5rem]" style={{"--value":solvedCount/problemsCount * 100, "--size": "7rem"}}> { solvedCount + " / " +  problemsCount}</div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
