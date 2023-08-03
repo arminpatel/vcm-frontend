@@ -1,15 +1,11 @@
-import { Button, Card, CardContent, Typography } from "@mui/material";
 import React, { useState } from "react";
-import CreateContestDetails from "./CreateContestDetails";
 import CreateProblemList from "./CreateProblemList";
 import getMaxId from "../utils/getMaxId";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { Navigate } from "react-router-dom";
 
 const CreateContestForm = () => {
-  const navigate = useNavigate();
 
   const [contestName, setContestName] = useState("");
   const [contestStartDateAndTime, setContestStartDateAndTime] = useState();
@@ -174,30 +170,28 @@ const CreateContestForm = () => {
     return <div>Some Error Occured </div>;
   }
   return (
-    <form>
-      <Typography variant="h2" align="center" mt={10}>
-        Create Your Contest
-      </Typography>
-
-      <Card
-        style={{ maxWidth: "900px", margin: "50px  auto", padding: "20px" }}
-      >
-        <CardContent>
-          <CreateContestDetails
-            addContestName={addContestName}
-            addContestDateAndTime={addContestDateAndTime}
-            addContestDuration={addContestDuration}
-          />
-        </CardContent>
-      </Card>
-
       <form className="form-control">
         <div className="card w-[63vw] m-auto bg-neutral ">
           <div className="text-2xl m-6"> Contest Details </div>
-          <input type="text" placeholder="Contest Name" required className="m-6 p-4 rounded" />
+          <input type="text" 
+                 placeholder="Contest Name"
+                 required 
+                 className="m-6 p-4 rounded"
+                 onChange={addContestName}
+          />
           <div>
-            <input type="datetime-local" placeholder="Contest Start Date and Time" required className="m-6 p-4 rounded w-1/3" />
-            <input type="number" label="Contest Duration" required className="m-6 p-4 rounded w-1/3" />
+            <input type="datetime-local" 
+                   placeholder="Contest Start Date and Time"
+                   required 
+                   className="m-6 p-4 rounded w-1/3"
+                   onChange={addContestDateAndTime}
+            />
+            <input type="number" 
+                   placeholder="Contest Duration"
+                   required 
+                   className="m-6 p-4 rounded w-1/3"
+                   onChange={addContestDuration}
+            />
           </div>
         </div>
 
@@ -212,39 +206,13 @@ const CreateContestForm = () => {
             problems={problems}
           />
         </div>
+        <div className="flex justify-evenly">
+          <div className="btn mt-4 btn-accent" onClick={submitForm}>
+            Create Contest
+          </div>
+        </div>
       </form>
 
-      <Card
-        style={{ maxWidth: "900px", margin: "50px  auto", padding: "20px" }}
-      >
-        <CardContent>
-          <CreateProblemList
-            addProblem={addProblem}
-            removeProblem={removeProblem}
-            addProblemName={addProblemName}
-            addProblemLink={addProblemLink}
-            addProblemScore={addProblemScore}
-            problemCount={problemCount}
-            problems={problems}
-          />
-        </CardContent>
-      </Card>
-
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-evenly",
-        }}
-      >
-        <Button variant="contained" onClick={submitForm}>
-          Create Contest
-        </Button>
-        <Button variant="contained" onClick={() => navigate("/")}>
-          Go Back Home
-        </Button>
-      </div>
-    </form>
   );
 };
 
