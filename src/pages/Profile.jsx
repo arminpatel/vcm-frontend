@@ -1,53 +1,22 @@
 import { Navbar } from "../components/Navbar";
-import { useState } from "react";
-import Link from "@mui/material/Link";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import { makeStyles } from "@mui/styles";
+import Footer from "../components/Footer";
+import {ReactComponent as Codeforces} from "../../assets/codeforces.svg";
+import {ReactComponent as Codechef} from "../../assets/codechef.svg";
+import atcoder_logo from "../../assets/atCoder_logo.png";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const useStyles = makeStyles(() => ({
-  header: {
-    width: "40vw",
-    backgroundColor: "#D4F1F4",
-    borderRadius: "1rem",
-    padding: "0 1rem 0.5rem 1rem",
-    marginTop: "1rem",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  overview: {
-    width: "40vw",
-    backgroundColor: "#D4F1F4",
-    borderRadius: "1rem",
-    padding: "1rem 1rem 0.5rem 1rem",
-    marginTop: "1.5rem",
-  },
-  contest: {
-    width: "40vw",
-    backgroundColor: "#D4F1F4",
-    borderRadius: "1rem",
-    padding: "1rem 1rem 0.5rem 1rem",
-    marginTop: "1.5rem",
-  },
-}));
 
 export function Profile() {
-  const [tabValue, setTabValue] = useState("overview");
   const { username } = useParams();
-  const classes = useStyles();
 
   const { status, data, error } = useQuery(["profile"], async () => {
     let res = await axios.get(`api/users/${username}`);
     let dataDetails = res.data;
     let dataContests;
     try {
-      let res2 = await axios.get(`api/contests/${username}`);
+      let res2 = await axios.get(`api/contests/user/${username}`);
       dataContests = res2.data;
     } catch (err) {
       dataContests = undefined;
@@ -75,90 +44,85 @@ export function Profile() {
   return (
     <>
       <Navbar />
-      <div className={classes.header}>
+      <div className="m-4 p-4 bg-neutral-focus min-h-[80vh]">
+      <div className= "bg-neutral-focus rounded-2xl px-4 mt-4 flex justify-between items-center">
         <div>
-          <Typography variant="h4">{dataDetails.username}</Typography>
-          <Typography>
+          <div className="text-4xl">{dataDetails.username}</div>
+          <div>
             {dataDetails.first_name + " " + dataDetails.last_name}
-          </Typography>
+          </div>
         </div>
+
+      <div className="w-[40vw] radius-[1rem] p-4 mt-4">
+        <div className="flex my-2">
+          <Codeforces className="mr-2 w-6 h-6" />
+          <span className="mr-2"> Codeforces: </span>
+          {dataDetails.profile?.cf_handle ? (
+            <a className="link link"
+              href={`https://codeforces.com/profile/${dataDetails.profile.cf_handle}`}
+            >
+              {dataDetails.profile.cf_handle}
+            </a>
+          ) : (
+            "Unavailable"
+          )}
+        </div>
+        <div className="flex my-2">
+          <Codechef className="mr-2 w-6 h-6" />
+          <span className="mr-2"> Codechef: </span>
+          {dataDetails.profile?.cc_handle ? (
+            <a className="link link"
+              href={`https://codechef.com/users/${dataDetails.profile.cc_handle}`}
+            >
+              {dataDetails.profile.cc_handle}
+            </a>
+          ) : (
+            "Unavailable"
+          )}
+        </div>
+        <div className="flex my-2">
+          <img src={atcoder_logo} className="w-6 h-6 mr-2" alt="atcoder" />
+          <span className="mr-2"> AtCoder: </span>
+          {dataDetails.profile?.ac_handle ? (
+            <a className="link link"
+              href={`https://atcoder.jp/users/${dataDetails.profile.ac_handle}`}
+            >
+              {dataDetails.profile.ac_handle}
+            </a>
+          ) : (
+            "Unavailable"
+          )}
+        </div>
+      </div>
         <div>
-          <Button variant="contained">Edit Profile</Button>
+          <div className="btn">Edit Profile</div>
         </div>
       </div>
 
-      <Tabs
-        value={tabValue}
-        onChange={(e, val) => {
-          setTabValue(val);
-        }}
-      >
-        <Tab value="overview" label="Overview" />
-        <Tab value="contests" label="Contests" />
-      </Tabs>
+      <div className="text-3xl mb-4"> Contests </div>
 
-      {tabValue === "overview" && (
-        <div className={classes.overview}>
-          <Typography>
-            Codeforces:{" "}
-            {dataDetails.profile.cf_handle ? (
-              <Link
-                href={`https://codeforces.com/profile/${dataDetails.profile.cf_handle}`}
-              >
-                {" "}
-                {dataDetails.profile.cf_handle}{" "}
-              </Link>
-            ) : (
-              "Unavailable"
-            )}
-          </Typography>
-          <Typography>
-            Codechef:{" "}
-            {dataDetails.profile.cc_handle ? (
-              <Link
-                href={`https://codechef.com/users/${dataDetails.profile.cc_handle}`}
-              >
-                {" "}
-                {dataDetails.profile.cc_handle}{" "}
-              </Link>
-            ) : (
-              "Unavailable"
-            )}
-          </Typography>
-          <Typography>
-            AtCoder:{" "}
-            {dataDetails.profile.ac_handle ? (
-              <Link
-                href={`https://atcoder.jp/users/${dataDetails.profile.ac_handle}`}
-              >
-                {" "}
-                {dataDetails.profile.ac_handle}{" "}
-              </Link>
-            ) : (
-              "Unavailable"
-            )}
-          </Typography>
-        </div>
-      )}
-
-      {tabValue === "contests" && (
-        <div className={classes.contestsContainer}>
-          {dataContests
-            ? dataContests.map((contest, index) => {
-                const dt = new Date(Date.parse(contest.start));
-                return (
-                  <div key={index} className={classes.contest}>
-                    <Typography>{contest.name}</Typography>
-                    <div>
-                      <Typography> Start Time: {dt.toString()}</Typography>
-                      <Typography>Duration: {contest.duration}</Typography>
-                    </div>
+      <div className="flex flex-wrap justify-around">
+        {dataContests
+          ? dataContests.map((contest, index) => {
+              const dt = new Date(Date.parse(contest.start_date_time));
+              return (
+                  <div key={index} className="card bg-base-300 bg-red-500 text-primary-content rounded-2xl p-4 m-4">
+                  <h2 className="card-title text-2xl py-2 capitalize">{contest.name}</h2>
+                  <div>
+                    <div> <span className="font-bold"> Start Time:</span> {dt.toLocaleString()}</div>
+                    <div> <span className="font-bold"> Duration: </span> {contest.duration}</div>
                   </div>
-                );
-              })
-            : "No Contest to Show"}
-        </div>
-      )}
+                </div>
+              );
+            })
+          : (
+                <div className="p-6">
+                  No Contest to Show
+                </div>
+              )}
+      </div>
+    </div>
+      <Footer />
     </>
   );
 }
