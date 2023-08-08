@@ -101,6 +101,5 @@ export const Signup = () => {
       </div>
       <SignupIllustration className="w-[40vw] h-[90vh]"/>
     </div>
-    
   )
 }
