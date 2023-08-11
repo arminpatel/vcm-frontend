@@ -1,6 +1,5 @@
 import { Navbar } from "./../components/Navbar";
 import Footer from "./../components/Footer";
-import { makeStyles } from "@mui/styles";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";

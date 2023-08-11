@@ -17,9 +17,9 @@ const CreateProblemList = ({
           PROBLEMS
         </div>
 
-        <div className="btn" onClick={addProblem}> 
+        <button className="btn" onClick={addProblem}> 
           Add Problem
-        </div>
+        </button>
       </div>
 
       <div className="flex flex-col gap-4">

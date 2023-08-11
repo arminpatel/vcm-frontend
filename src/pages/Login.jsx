@@ -51,7 +51,7 @@ export default function Login() {
           </div>
         </form>
 
-        <Link to="/signup" className="text-sm mt-4">Don't have an account? Sign Up</Link>
+        <Link to="/signup" className="text-sm mt-4">{"Don't have an account? Sign Up"}</Link>
 
         {loginMutation.isError && <div className="alert alert-error mt-4">
           <div className="flex-1">
