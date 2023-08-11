@@ -19,7 +19,7 @@ export function App() {
         <Route path="/" element={<Home />} />
         <Route path="/create-contest" element={<CreateContest />} />
         <Route path="/contest/:contestId" element={<Contest />} />
-        <Route path="/sign-up" element={<Signup />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile/:username" element={<Profile />} />
       </Routes>

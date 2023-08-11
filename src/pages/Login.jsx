@@ -1,16 +1,6 @@
 import { useState } from 'react';
-import { Avatar } from '@mui/material';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import { Link as RouterLink, Navigate } from 'react-router-dom';
+import { ReactComponent as LoginIllustration } from '../../assets/login-illustration.svg';
+import { Link, Navigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -31,63 +21,46 @@ export default function Login() {
     }
   );
 
-  const handleSumit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(username, password, rememberMe);
     loginMutation.mutate({ username: username, password: password });
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Log In
-        </Typography>
-        <Box component="form" onSubmit={handleSumit} sx={{ mt: 1 }}>
-          <TextField 
-              margin="normal"
-              required
-              fullWidth
-              onChange={(e) => setUsername(e.target.value)} 
-              id="email"
-              label="Username"
-              variant="outlined" />
-          <TextField 
-              margin="normal"
-              required
-              fullWidth
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              id="password"
-              label="Password"
-              variant="outlined" />
-
-          <FormControlLabel control={<Checkbox 
-              value="remember" 
-              color="primary" 
+    <div className="flex items-center justify-around">
+      <div className="w-[40vw] flex flex-col items-center bg-neutral-focus p-8 rounded-xl">
+        <div className="text-3xl">Log In</div>
+        <form className="flex flex-col items-center justify-center">
+          <input type="text" placeholder="Username" className="input input-bordered m-2 mt-6" onChange={(e) => setUsername(e.target.value)} />
+          <input type="password" placeholder="Password" className="input input-bordered m-2" onChange={(e) => setPassword(e.target.value)} />
+          <div className="form-control">
+            <label className="cursor-pointer label">
+            <input type="checkbox" className="checkbox checkbox-primary" 
               onChange={(e) => setRememberMe(e.target.checked)}
-              />} 
-            label="Remember me" />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} >
+            />
+            <span className="label-text m-2">
+                Remember me
+            </span>
+          </label>
+          </div>
+          {/* eslint-disable-next-line */}
+          <div className="btn btn-primary min-w-full" onClick={handleSubmit}>
             {loginMutation.isLoading ? 'Logging you in...' : 'Log In'}
-          </Button>
-          { loginMutation.isError && <Typography color="error">{loginMutation.error.response.data.detail}</Typography> }
           { loginMutation.isSuccess && <Navigate to="/" /> }
-          <Link component={RouterLink} to="/sign-up" variant="body2" sx={{ ml: "auto"}} >
-            {"Don't have an account? Sign Up"}
-          </Link>
-        </Box>
-      </Box>
-    </Container>
+          </div>
+        </form>
+
+        <Link to="/signup" className="text-sm mt-4">Don't have an account? Sign Up</Link>
+
+        {loginMutation.isError && <div className="alert alert-error mt-4">
+          <div className="flex-1">
+            <div className="label">Error</div> <p className="text-sm">{loginMutation.error.response.data.detail}</p>
+          </div>
+        </div>}
+      
+      </div>
+      <LoginIllustration className="w-[40vw] h-[90vh]"/>
+    </div>
     )
 }
