@@ -207,9 +207,9 @@ const CreateContestForm = () => {
           />
         </div>
         <div className="flex justify-evenly">
-          <div className="btn mt-4 btn-accent" onClick={submitForm}>
+          <button className="btn mt-4 btn-accent" onClick={submitForm}>
             Create Contest
-          </div>
+          </button>
         </div>
       </form>
 

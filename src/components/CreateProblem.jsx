@@ -29,9 +29,9 @@ const CreateProblem = ({
         required
       />
       <div>
-        <div className = "btn btn-error" onClick={() => removeProblem(problem.id)} >
+        <button className = "btn btn-error" onClick={() => removeProblem(problem.id)} >
           <CloseIcon fontSize="medium" />
-        </div>
+        </button>
       </div>
     </div>
   );
