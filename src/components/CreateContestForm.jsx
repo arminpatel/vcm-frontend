@@ -26,8 +26,15 @@ const CreateContestForm = () => {
   ]);
 
   const addContestName = (event) => setContestName(event.target.value);
-  const addContestDateAndTime = (date) => setContestStartDateAndTime(date);
-  const addContestDuration = (event) => setContestDuration(+event.target.value);
+  const addContestDateAndTime = (event) =>
+    setContestStartDateAndTime(event.target.value);
+  const addContestDuration = (event) => {
+    let time_in_minutes = +event.target.value;
+    let time_in_hours = Math.floor(time_in_minutes / 60);
+    let remaining_time_in_minutes = time_in_minutes % 60;
+    let duration_string = `${time_in_hours}:${remaining_time_in_minutes}:00`;
+    setContestDuration(duration_string);
+  };
 
   const addProblem = () => {
     if (problemCount >= 100) {
@@ -118,6 +125,16 @@ const CreateContestForm = () => {
       if (url.protocol !== "http:" && url.protocol !== "https:") {
         flag = "problemLinkFormatIncorrect";
       }
+      if (
+        url.host !== "www.codeforces.com" &&
+        url.host !== "codeforces.com" &&
+        url.host !== "www.codechef.com" &&
+        url.host !== "codechef.com" &&
+        url.host !== "atcoder.jp" &&
+        url.host !== "www.atcoder.jp"
+      ) {
+        flag = "problemJudgeIncorrect";
+      }
     });
 
     if (flag === "problemDetailIncorrect") {
@@ -134,8 +151,22 @@ const CreateContestForm = () => {
     } else if (flag === "problemScoreIncorrect") {
       window.alert("The problem score must be between 0 and 10000");
       return false;
+    } else if (flag === "problemJudgeIncorrect") {
+      window.alert(
+        "Only Codeforces, Codechef and Atcoder problems are supported"
+      );
+      return false;
     }
     return true;
+  };
+
+  const get_online_judge_from_link = (link) => {
+    let url = new URL(link);
+    if (url.host == "www.codeforces.com" || url.host === "codeforces.com")
+      return "codeforces";
+    else if (url.host == "www.codechef.com" || url.host === "codechef.com")
+      return "codechef";
+    else return "atcoder";
   };
 
   const submitForm = (e) => {
@@ -148,6 +179,7 @@ const CreateContestForm = () => {
     let nwproblems = problems.map((problem) => {
       // eslint-disable-next-line no-unused-vars
       let { id: _, ...rest } = problem;
+      rest.online_judge = get_online_judge_from_link(problem.link);
       return rest;
     });
 
@@ -169,7 +201,7 @@ const CreateContestForm = () => {
     return <div>Some Error Occured </div>;
   }
   return (
-    <form className="form-control">
+    <form className="form-control mt-10">
       <div className="card w-[63vw] m-auto bg-neutral ">
         <div className="text-2xl m-6"> Contest Details </div>
         <input
@@ -208,8 +240,8 @@ const CreateContestForm = () => {
           problems={problems}
         />
       </div>
-      <div className="flex justify-evenly">
-        <button className="btn mt-4 btn-accent" onClick={submitForm}>
+      <div className="flex justify-evenly mt-10">
+        <button className="btn mt-4 btn-primary" onClick={submitForm}>
           Create Contest
         </button>
       </div>

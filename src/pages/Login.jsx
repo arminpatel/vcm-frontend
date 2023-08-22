@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Navbar } from "../components/Navbar";
-import  Footer  from "../components/Footer";
+import Footer from "../components/Footer";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -29,7 +29,6 @@ export default function Login() {
     e.preventDefault();
     console.log(username, password, rememberMe);
     loginMutation.mutate({ username: username, password: password });
-
   };
 
   return (

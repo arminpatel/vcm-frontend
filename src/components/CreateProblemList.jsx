@@ -15,7 +15,7 @@ const CreateProblemList = ({
       <div className="flex justify-between mb-4">
         <div className="text-xl">PROBLEMS</div>
 
-        <button className="btn" onClick={addProblem}>
+        <button className="btn btn-secondary text-white" onClick={addProblem}>
           Add Problem
         </button>
       </div>
