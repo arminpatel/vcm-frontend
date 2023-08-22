@@ -1,13 +1,11 @@
 name: React Build Verify
 run-name: Testing if the project is building correctly 🚀
 
-
-on: 
-  push :
-    branches: [ main ]
-  pull_request : 
-    branches: [ main ]
-
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
@@ -20,7 +18,7 @@ jobs:
 
       - name: set up Node.js
         uses: actions/setup-node@v3
-        with: 
+        with:
           node-version: 18
 
       - name: Install dependencies

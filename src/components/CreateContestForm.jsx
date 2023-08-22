@@ -6,7 +6,6 @@ import { useMutation } from "@tanstack/react-query";
 import { Navigate } from "react-router-dom";
 
 const CreateContestForm = () => {
-
   const [contestName, setContestName] = useState("");
   const [contestStartDateAndTime, setContestStartDateAndTime] = useState();
   const [contestDuration, setContestDuration] = useState(0);
@@ -170,49 +169,51 @@ const CreateContestForm = () => {
     return <div>Some Error Occured </div>;
   }
   return (
-      <form className="form-control">
-        <div className="card w-[63vw] m-auto bg-neutral ">
-          <div className="text-2xl m-6"> Contest Details </div>
-          <input type="text" 
-                 placeholder="Contest Name"
-                 required 
-                 className="m-6 p-4 rounded"
-                 onChange={addContestName}
+    <form className="form-control">
+      <div className="card w-[63vw] m-auto bg-neutral ">
+        <div className="text-2xl m-6"> Contest Details </div>
+        <input
+          type="text"
+          placeholder="Contest Name"
+          required
+          className="m-6 p-4 rounded"
+          onChange={addContestName}
+        />
+        <div>
+          <input
+            type="datetime-local"
+            placeholder="Contest Start Date and Time"
+            required
+            className="m-6 p-4 rounded w-1/3"
+            onChange={addContestDateAndTime}
           />
-          <div>
-            <input type="datetime-local" 
-                   placeholder="Contest Start Date and Time"
-                   required 
-                   className="m-6 p-4 rounded w-1/3"
-                   onChange={addContestDateAndTime}
-            />
-            <input type="number" 
-                   placeholder="Contest Duration"
-                   required 
-                   className="m-6 p-4 rounded w-1/3"
-                   onChange={addContestDuration}
-            />
-          </div>
-        </div>
-
-        <div className="card w-[63vw] m-auto bg-neutral mt-[3rem] p-[1rem]">
-          <CreateProblemList
-            addProblem={addProblem}
-            removeProblem={removeProblem}
-            addProblemName={addProblemName}
-            addProblemLink={addProblemLink}
-            addProblemScore={addProblemScore}
-            problemCount={problemCount}
-            problems={problems}
+          <input
+            type="number"
+            placeholder="Contest Duration"
+            required
+            className="m-6 p-4 rounded w-1/3"
+            onChange={addContestDuration}
           />
         </div>
-        <div className="flex justify-evenly">
-          <button className="btn mt-4 btn-accent" onClick={submitForm}>
-            Create Contest
-          </button>
-        </div>
-      </form>
+      </div>
 
+      <div className="card w-[63vw] m-auto bg-neutral mt-[3rem] p-[1rem]">
+        <CreateProblemList
+          addProblem={addProblem}
+          removeProblem={removeProblem}
+          addProblemName={addProblemName}
+          addProblemLink={addProblemLink}
+          addProblemScore={addProblemScore}
+          problemCount={problemCount}
+          problems={problems}
+        />
+      </div>
+      <div className="flex justify-evenly">
+        <button className="btn mt-4 btn-accent" onClick={submitForm}>
+          Create Contest
+        </button>
+      </div>
+    </form>
   );
 };
 

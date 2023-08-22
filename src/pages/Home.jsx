@@ -34,10 +34,10 @@ const Home = () => {
           </div>
         </div>
         <div className="flex justify-center flex-1 mb-10 md:mb-16 lg:mb-0 ">
-          <CodingIllustration className="h-full w-full "/>
+          <CodingIllustration className="h-full w-full " />
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };
