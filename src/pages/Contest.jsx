@@ -16,7 +16,8 @@ const Contest = () => {
     return res.data;
   });
 
-  var problemsCount = 0, solvedCount = 0;
+  var problemsCount = 0,
+    solvedCount = 0;
 
   const getTime = () => {
     const durHours = Number(data.duration.slice(0, 2));
@@ -39,10 +40,10 @@ const Contest = () => {
   if (status === "loading") return <div>Loading...</div>;
   if (error) return <div>Some error Occured </div>;
 
-  if(data) {
+  if (data) {
     problemsCount = data.problems.length;
-    data.problems.forEach(({isSolved}) => {
-      if(isSolved) solvedCount++;
+    data.problems.forEach(({ isSolved }) => {
+      if (isSolved) solvedCount++;
     });
   }
 
@@ -60,10 +61,15 @@ const Contest = () => {
               </tr>
             </thead>
             <tbody>
-              {data.problems.map(({name, link, isSolved}, ind) => { 
+              {data.problems.map(({ name, link, isSolved }, ind) => {
                 return (
-                  <tr key={link} className={isSolved ? "bg-green-600 text-white" : "bg-base-300"}>
-                    <td>{ind+1}</td>
+                  <tr
+                    key={link}
+                    className={
+                      isSolved ? "bg-green-600 text-white" : "bg-base-300"
+                    }
+                  >
+                    <td>{ind + 1}</td>
                     <td>
                       <a href={link} target="_blank" rel="noreferrer">
                         {name}
@@ -92,7 +98,16 @@ const Contest = () => {
               <br />
               {minutes} minutes {seconds} seconds
             </div>
-            <div className="radial-progress text-green-500 mt-[5rem]" style={{"--value":solvedCount/problemsCount * 100, "--size": "7rem"}}> { solvedCount + " / " +  problemsCount}</div>
+            <div
+              className="radial-progress text-green-500 mt-[5rem]"
+              style={{
+                "--value": (solvedCount / problemsCount) * 100,
+                "--size": "7rem",
+              }}
+            >
+              {" "}
+              {solvedCount + " / " + problemsCount}
+            </div>
           </div>
         </div>
       </div>

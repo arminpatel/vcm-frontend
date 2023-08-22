@@ -13,11 +13,9 @@ const CreateProblemList = ({
   return (
     <>
       <div className="flex justify-between mb-4">
-        <div className="text-xl">
-          PROBLEMS
-        </div>
+        <div className="text-xl">PROBLEMS</div>
 
-        <button className="btn" onClick={addProblem}> 
+        <button className="btn" onClick={addProblem}>
           Add Problem
         </button>
       </div>
@@ -35,9 +33,7 @@ const CreateProblemList = ({
             />
           );
         })}
-        <div className="text-lg">
-          Total Problems: {problemCount}
-        </div>
+        <div className="text-lg">Total Problems: {problemCount}</div>
       </div>
     </>
   );

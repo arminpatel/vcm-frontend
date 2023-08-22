@@ -15,14 +15,14 @@ export function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <QueryClientProvider client={queryClient}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/create-contest" element={<CreateContest />} />
-        <Route path="/contest/:contestId" element={<Contest />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile/:username" element={<Profile />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/create-contest" element={<CreateContest />} />
+          <Route path="/contest/:contestId" element={<Contest />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile/:username" element={<Profile />} />
+        </Routes>
       </QueryClientProvider>
     </LocalizationProvider>
   );
