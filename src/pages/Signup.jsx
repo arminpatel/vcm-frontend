@@ -15,14 +15,14 @@ export const Signup = () => {
   const [ac_handle, setAcHandle] = useState("");
 
   const signupMutation = useMutation((data) => {
-    for (const [key, value] of Object.entries(data.profile)) {
+    for (const [key, value] of Object.entries(data?.profile)) {
       if (value === "" || value === null || value === undefined) {
-        delete data.profile[key];
+        delete data?.profile[key];
       }
     }
 
-    if (Object.keys(data.profile).length === 0) {
-      delete data.profile;
+    if (Object.keys(data?.profile).length === 0) {
+      delete data?.profile;
     }
 
     return fetch(`${config.apiUrl}/api/users/`, {
@@ -42,6 +42,7 @@ export const Signup = () => {
     const profile = { cf_handle, cc_handle, ac_handle };
     signupMutation.mutate({ username, password, email, profile });
   };
+
 
   return (
     <>
@@ -127,7 +128,7 @@ export const Signup = () => {
               <div className="flex-1">
                 <div className="label">Error</div>{" "}
                 <p className="text-sm">
-                  {signupMutation.error.response.data.detail}
+                  {signupMutation.error.message}
                 </p>
               </div>
             </div>
