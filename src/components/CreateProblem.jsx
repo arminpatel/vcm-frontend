@@ -9,7 +9,7 @@ const CreateProblem = ({
   addProblemScore,
 }) => {
   return (
-    <div className="flex gap-4">
+    <div className="flex justify-evenly gap-4">
       <input
         id="problem-name"
         placeholder="Problem Name"
@@ -40,10 +40,10 @@ const CreateProblem = ({
       />
       <div>
         <button
-          className="btn btn-error"
+          className="btn bg-red-500 btn-error"
           onClick={() => removeProblem(problem.id)}
         >
-          <CloseIcon fontSize="medium" />
+          <CloseIcon fontSize="medium" style={{ color: "white" }} />
         </button>
       </div>
     </div>

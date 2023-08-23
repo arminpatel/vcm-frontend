@@ -3,8 +3,8 @@ import { ReactComponent as SignupIllustration } from "../../assets/signup-illust
 import { Link, Navigate } from "react-router-dom";
 import config from "../utils/envConfig";
 import { useMutation } from "@tanstack/react-query";
-import { Navbar }   from "../components/Navbar";
-import  Footer  from "../components/Footer";
+import { Navbar } from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export const Signup = () => {
   const [username, setUsername] = useState("");
@@ -119,7 +119,7 @@ export const Signup = () => {
           </form>
 
           <Link to="/login" className="text-sm mt-4">
-            Already have an account? Log In 
+            Already have an account? Log In
           </Link>
 
           {signupMutation.isError && (
