@@ -10,6 +10,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Signup } from "./pages/Signup";
 import { Profile } from "./pages/Profile";
+import Submissions  from "./pages/Submissions";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserContext from "./utils/UserContext";
 
@@ -34,6 +36,8 @@ export function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/profile/:username" element={<Profile />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/profile/:username" element={<Profile />} />
+            <Route path="/contest/:contestId/submissions" element={<Submissions />} /> 
           </Routes>
         </UserContext.Provider>
       </QueryClientProvider>
