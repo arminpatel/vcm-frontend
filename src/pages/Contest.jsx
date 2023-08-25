@@ -1,11 +1,13 @@
 import { Navbar } from "./../components/Navbar";
 import Footer from "./../components/Footer";
+import ContestCountdown from "./../components/ContestCountdown";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const Contest = () => {
+  let navigate = useNavigate();
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -16,7 +18,7 @@ const Contest = () => {
     return res.data;
   });
 
-  var problemsCount = 0,
+  let problemsCount = 0,
     solvedCount = 0;
 
   const getTime = () => {
@@ -47,73 +49,100 @@ const Contest = () => {
     });
   }
 
-  return (
-    <div>
-      <Navbar />
-      <div className="flex justify-between pt-[5rem]">
-        <div className="overflow-x-auto w-[80vw] px-[3rem]">
-          <table className="table text-lg">
-            <thead className="text-xl pb-[5rem]">
-              <tr>
-                <th></th>
-                <th>Problem Name</th>
-                <th>Check</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.problems.map(({ name, link, isSolved }, ind) => {
-                return (
-                  <tr
-                    key={link}
-                    className={
-                      isSolved ? "bg-green-600 text-white" : "bg-base-300"
-                    }
-                  >
-                    <td>{ind + 1}</td>
-                    <td>
-                      <a href={link} target="_blank" rel="noreferrer">
-                        {name}
-                      </a>
-                    </td>
-                    <td>
-                      {isSolved ? (
-                        <div className="btn text-2xl"> ✅ </div>
-                      ) : (
-                        <div className="btn text-2xl"> 🔍 </div>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <div className="grow h-[75vh]">
-          <div className="text-center pl-[10px]">
-            <div className="text-xl">{data.name}</div>
+  if (Date.now() - Date.parse(data.start_date_time) < 0)
+    return (
+      <ContestCountdown
+        start_time={data.start_date_time}
+        contest_name={data.name}
+      />
+    );
+  else
+    return (
+      <div>
+        <Navbar />
+        <div className="flex justify-between pt-[5rem]">
+          <div className="overflow-x-auto w-[77vw] px-[3rem]">
+            <table className="table text-lg">
+              <thead className="text-xl pb-[5rem]">
+                <tr>
+                  <th></th>
+                  <th>Problem Name</th>
+                  <th>Check</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.problems.map(({ name, link, isSolved }, ind) => {
+                  return (
+                    <tr
+                      key={link}
+                      className={
+                        isSolved ? "bg-green-600 text-white" : "bg-base-300"
+                      }
+                    >
+                      <td>{ind + 1}</td>
+                      <td>
+                        <a href={link} target="_blank" rel="noreferrer">
+                          {name}
+                        </a>
+                      </td>
+                      <td>
+                        {isSolved ? (
+                          <div className="btn text-2xl"> ✅ </div>
+                        ) : (
+                          <div className="btn text-2xl"> 🔍 </div>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
-          <div className="text-center pl-[10px]">
-            <div>
-              {days} days {hours} hours
-              <br />
-              {minutes} minutes {seconds} seconds
+          <div className="grow h-[75vh]">
+            <div className="text-center pl-[10px]">
+              <div className="text-4xl">{data.name}</div>
             </div>
-            <div
-              className="radial-progress text-green-500 mt-[5rem]"
-              style={{
-                "--value": (solvedCount / problemsCount) * 100,
-                "--size": "7rem",
-              }}
-            >
-              {" "}
-              {solvedCount + " / " + problemsCount}
+            <div className="text-center text-xl mt-10">- Time Left -</div>
+            <div className="text-center text-lg mt-2 pl-[10px]">
+              {days >= 0 && hours >= 0 && minutes >= 0 && seconds >= 0 ? (
+                <div>
+                  {days} days {hours} hours
+                  <br />
+                  {minutes} minutes {seconds} seconds
+                </div>
+              ) : (
+                <div>Contest has Ended</div>
+              )}
+              <div
+                className="radial-progress text-green-500 mt-[5rem]"
+                style={{
+                  "--value": (solvedCount / problemsCount) * 100,
+                  "--size": "7rem",
+                }}
+              >
+                {" "}
+                {solvedCount + " / " + problemsCount}
+              </div>
+            </div>
+            <div className="flex flex-row justify-center mt-10 gap-10">
+              <button
+                className="shadow-md py-2 px-3 text-white text-sm rounded-md bg-blue-800 hover:bg-blue-600"
+                onClick={() => navigate("./submissions")}
+              >
+                My Submissions
+              </button>
+              <button
+                className="shadow-md py-2 px-3 text-white text-sm rounded-md bg-purple-800 hover:bg-purple-600"
+                onClick={() => navigate("./submissions/username")}
+              >
+                All Submissions
+              </button>
             </div>
           </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
-  );
+    );
 };
 
 export default Contest;
