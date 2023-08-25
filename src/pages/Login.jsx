@@ -6,12 +6,16 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { Navbar } from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useContext } from "react";
+import UserContext from "../utils/UserContext";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   // eslint-disable-next-line no-unused-vars
   const [rememberMe, setRememberMe] = useState(false);
+
+  const {setUser} = useContext(UserContext);
 
   const loginMutation = useMutation(
     (data) => {
@@ -20,14 +24,23 @@ export default function Login() {
     {
       onSuccess: (data) => {
         Cookies.set("access", data.data.access);
-        Cookies.set("refresh", data.data.refresh);
+        Cookies.set("refresh", data.data.refresh, {expires: 1});
+
+        axios.get(`/api/users/${username}/`)
+        .then((res) => {
+          if(res.status !== 200) {
+            console.log("Error getting user data");
+            return;
+          }
+          localStorage.setItem("user", JSON.stringify(res.data));
+          setUser({loggedIn: true, user: res.data})
+        })
       },
     }
   );
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password, rememberMe);
     loginMutation.mutate({ username: username, password: password });
   };
 
