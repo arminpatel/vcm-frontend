@@ -25,8 +25,9 @@ const Contest = () => {
     const durHours = Number(data.duration.slice(0, 2));
     const durMins = Number(data.duration.slice(3, 5));
     const endtime =
-      Date.parse(data.start_date_time) + 360000 * durHours + 60000 * durMins;
+      Date.parse(data.start_date_time) + 3600000 * durHours + 60000 * durMins;
     const time = endtime - Date.now();
+
     setDays(Math.floor(time / (1000 * 60 * 60 * 24)));
     setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
     setMinutes(Math.floor((time / 1000 / 60) % 60));
@@ -35,7 +36,6 @@ const Contest = () => {
 
   useEffect(() => {
     const interval = setInterval(() => getTime(), 1000);
-
     return () => clearInterval(interval);
   });
 
@@ -44,10 +44,25 @@ const Contest = () => {
 
   if (data) {
     problemsCount = data.problems.length;
-    data.problems.forEach(({ isSolved }) => {
-      if (isSolved) solvedCount++;
+    data.problems.forEach(({ is_solved }) => {
+      if (is_solved) solvedCount++;
     });
   }
+
+  const submitProblem = async (problem_id) => {
+    try {
+      await axios.post("/api/submissions/", { problem_id: problem_id });
+      window.location.reload();
+    } catch (err) {
+      if (
+        err.code == "ERR_BAD_REQUEST" &&
+        err.request.response == '["problem is not solved"]'
+      ) {
+        alert("You have not solved the Problem yet");
+        return;
+      }
+    }
+  };
 
   if (Date.now() - Date.parse(data.start_date_time) < 0)
     return (
@@ -71,12 +86,12 @@ const Contest = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.problems.map(({ name, link, isSolved }, ind) => {
+                {data.problems.map(({ id, name, link, is_solved }, ind) => {
                   return (
                     <tr
-                      key={link}
+                      key={id}
                       className={
-                        isSolved ? "bg-green-600 text-white" : "bg-base-300"
+                        is_solved ? "bg-green-600 text-white" : "bg-base-300"
                       }
                     >
                       <td>{ind + 1}</td>
@@ -86,10 +101,16 @@ const Contest = () => {
                         </a>
                       </td>
                       <td>
-                        {isSolved ? (
+                        {is_solved ? (
                           <div className="btn text-2xl"> ✅ </div>
                         ) : (
-                          <div className="btn text-2xl"> 🔍 </div>
+                          <button
+                            className="btn text-2xl"
+                            onClick={() => submitProblem(id)}
+                          >
+                            {" "}
+                            🔍{" "}
+                          </button>
                         )}
                       </td>
                     </tr>
