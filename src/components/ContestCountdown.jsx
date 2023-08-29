@@ -35,11 +35,6 @@ const ContestCountDown = ({ start_time, contest_name }) => {
         <div className="text-center mt-5 text-5xl">
           {days} Days {hours} Hours {minutes} Minutes {seconds} Seconds
         </div>
-        <div className="flex flex-row justify-center mt-10">
-          <button className="text-center px-10 py-2 bg-blue-800 text-xl text-white hover:bg-blue-600 rounded-md shadow-md">
-            Register
-          </button>
-        </div>
       </div>
       <Footer />
     </div>
