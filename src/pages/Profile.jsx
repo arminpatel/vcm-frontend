@@ -4,11 +4,12 @@ import { ReactComponent as Codeforces } from "../../assets/codeforces.svg";
 import { ReactComponent as Codechef } from "../../assets/codechef.svg";
 import atcoder_logo from "../../assets/atCoder_logo.png";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export function Profile() {
   const { username } = useParams();
+  const navigate = useNavigate();
 
   const { status, data, error } = useQuery(["profile"], async () => {
     let res = await axios.get(`api/users/${username}`);
@@ -44,7 +45,7 @@ export function Profile() {
     <>
       <Navbar />
       <div className="m-4 p-4 bg-neutral-focus min-h-[80vh]">
-        <div className="bg-neutral-focus rounded-2xl px-4 mt-4 flex justify-between items-center">
+        <div className="outline outline-gray-400 bg-neutral-focus rounded-2xl px-4 mt-4 flex justify-between items-center">
           <div>
             <div className="text-4xl">{dataDetails.username}</div>
             <div>{dataDetails.first_name + " " + dataDetails.last_name}</div>
@@ -99,16 +100,17 @@ export function Profile() {
           </div>
         </div>
 
-        <div className="text-3xl mb-4"> Contests </div>
+        <div className="text-xl mt-10 mb-4"> User Contests </div>
 
         <div className="flex flex-wrap justify-around">
-          {dataContests ? (
+          {dataContests && dataContests.length > 0 ? (
             dataContests.map((contest, index) => {
               const dt = new Date(Date.parse(contest.start_date_time));
               return (
-                <div
+                <button
                   key={index}
                   className="card bg-base-300 bg-red-500 text-primary-content rounded-2xl p-4 m-4"
+                  onClick={() => navigate(`/contest/${contest.id}`)}
                 >
                   <h2 className="card-title text-2xl py-2 capitalize">
                     {contest.name}
@@ -125,11 +127,11 @@ export function Profile() {
                       {contest.duration}
                     </div>
                   </div>
-                </div>
+                </button>
               );
             })
           ) : (
-            <div className="p-6">No Contest to Show</div>
+            <div className="mt-20 text-5xl">No Contest to Show</div>
           )}
         </div>
       </div>
