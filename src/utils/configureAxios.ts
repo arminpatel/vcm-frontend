@@ -51,7 +51,7 @@ const configureAxios = () => {
           Cookies.set("access", access);
           originalRequest.headers["Authorization"] = `Bearer ${access}`;
           return axios(originalRequest);
-        } catch (err) {
+        } catch  {
           if (originalRequest.url?.includes("/api/token/refresh")) {
             return Promise.reject(error);
           } else {

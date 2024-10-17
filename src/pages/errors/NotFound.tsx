@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Frame, Home, ArrowLeft } from "lucide-react";
+import { Home, ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 
@@ -22,7 +22,7 @@ export default function NotFound() {
         <div className="text-center space-y-6">
           <h2 className="text-4xl font-bold">404 - Page Not Found</h2>
           <p className="text-xl text-muted-foreground max-w-md mx-auto">
-            Oops! The page you're looking for doesn't exist or has been moved.
+            Oops! The page you&apos;re looking for doesn&apos;t exist or has been moved.
           </p>
           <div className="space-x-4">
             <Button asChild>

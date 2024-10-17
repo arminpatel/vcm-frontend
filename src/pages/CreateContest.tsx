@@ -16,7 +16,7 @@ const CreateContest = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <CreateContestForm />
-      <div className="mb-20"></div>
+      <Footer />
     </div>
   );
 };

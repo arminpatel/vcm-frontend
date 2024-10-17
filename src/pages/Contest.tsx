@@ -2,12 +2,11 @@ import { Navbar } from "@/components/Navbar";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Frame, Search, CheckCircle2, Clock } from "lucide-react";
+import { Search, CheckCircle2, Clock } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ContestNotStarted from "@/components/ContestNotStarted";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 type Problem = {
   id: number;
@@ -15,21 +14,12 @@ type Problem = {
   is_solved: boolean;
 };
 
-type ContestPageProps = {
-  contestName?: string;
-  problems?: Problem[];
-  timeLeft?: string;
-  solvedCount?: number;
-  totalProblems?: number;
-};
-
 const ContestPage = () => {
   const { contestId } = useParams();
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"problems" | "submissions">(
     "problems",
   );
-  const [days, setDays] = useState(0);
+  const [setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -74,7 +64,7 @@ const ContestPage = () => {
     try {
       await axios.post("/api/submissions/", { problem_id });
       window.location.reload();
-    } catch (err: any) {
+    } catch (err) {
       if (
         err.code === "ERR_BAD_REQUEST" &&
         err.request.response === '["problem is not solved"]'

@@ -14,7 +14,7 @@ export default function Error() {
         <div className="text-center space-y-6">
           <h2 className="text-4xl font-bold">500 - Internal Server Error</h2>
           <p className="text-xl text-muted-foreground max-w-md mx-auto">
-            Oops! Something went wrong on our end. We're working to fix the
+            Oops! Something went wrong on our end. We&apos;re working to fix the
             issue.
           </p>
           <p className="text-muted-foreground">Please try again later.</p>

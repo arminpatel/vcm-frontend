@@ -37,7 +37,7 @@ const FormSchema = z.object({
 });
 
 export default function Login() {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const { toast } = useToast();
 
   const form = useForm({
@@ -155,7 +155,7 @@ export default function Login() {
           </CardContent>
           <CardFooter className="justify-center">
             <p className="text-sm text-muted-foreground">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link to="/signup" className="text-primary hover:underline">
                 Sign Up
               </Link>

@@ -47,7 +47,7 @@ export default function ContestNotStarted({
         </CardHeader>
         <CardContent className="space-y-6">
           <p className="text-lg text-muted-foreground">
-            The contest hasn't started yet.
+            The contest hasn&apos;t started yet.
           </p>
           <div className="flex items-center justify-center space-x-4">
             <Calendar className="h-6 w-6 text-muted-foreground" />

@@ -2,7 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Trophy, Edit2 } from "lucide-react";
@@ -10,18 +10,17 @@ import axios from "axios";
 
 export function Profile() {
   const { username } = useParams();
-  const navigate = useNavigate();
 
   const { status, data, error } = useQuery({
     queryKey: ["profile", username],
     queryFn: async () => {
-      let res = await axios.get(`api/users/${username}`);
-      let dataDetails = res.data;
+      const res = await axios.get(`api/users/${username}`);
+      const dataDetails = res.data;
       let dataContests;
       try {
-        let res2 = await axios.get(`api/contests/user/${username}`);
+        const res2 = await axios.get(`api/contests/user/${username}`);
         dataContests = res2.data;
-      } catch (err) {
+      } catch {
         dataContests = undefined;
       }
       console.log(dataDetails, dataContests);

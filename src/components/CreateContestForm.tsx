@@ -91,7 +91,7 @@ const CreateContestForm = () => {
     form.setValue("problems", updatedProblems);
   };
   const getOnlineJudgeFromLink = (link) => {
-    let url = new URL(link);
+    const url = new URL(link);
     if (url.host.includes("codeforces")) return "codeforces";
     if (url.host.includes("codechef")) return "codechef";
     if (url.host.includes("atcoder")) return "atcoder";
@@ -107,10 +107,10 @@ const CreateContestForm = () => {
       online_judge: getOnlineJudgeFromLink(problem.link),
     }));
 
-    let time_in_minutes = data.duration;
-    let time_in_hours = Math.floor(time_in_minutes / 60);
-    let remaining_time_in_minutes = time_in_minutes % 60;
-    let duration_string = `${time_in_hours}:${remaining_time_in_minutes}:00`;
+    const time_in_minutes = data.duration;
+    const time_in_hours = Math.floor(time_in_minutes / 60);
+    const remaining_time_in_minutes = time_in_minutes % 60;
+    const duration_string = `${time_in_hours}:${remaining_time_in_minutes}:00`;
 
     const contestDetails = {
       name: data.contestName,
