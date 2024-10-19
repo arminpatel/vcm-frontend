@@ -28,7 +28,8 @@ jobs:
             sudo cd ${{ VCM_FRONTEND_DIR }}
             sudo npm install
             sudo npm run build
-            sudo cp -r dist/* /var/www/html
+            sudo rm -rf /var/www
+            sudo cp -r dist/* /var/www/
             sudo systemctl restart nginx
           EOF
 
