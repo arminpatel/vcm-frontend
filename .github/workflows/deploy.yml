@@ -20,12 +20,12 @@ jobs:
 
       - name: Copy new changes 
         run: | 
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} 'rm -rf ${{ VCM_FRONTEND_DIR }}'
-          scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.VCM_HOST_USERNAME}}@${{ secrets.VCM_HOST_DNS }}:${{VCM_FROTEND_DIR}}
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} 'rm -rf ${{ secrets.VCM_FRONTEND_DIR }}'
+          scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.VCM_HOST_USERNAME}}@${{ secrets.VCM_HOST_DNS }}:${{ secrets.VCM_FROTEND_DIR }}
       - name: Build the changes and deploy
         run: | 
           ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} << EOF
-            sudo cd ${{ VCM_FRONTEND_DIR }}
+            sudo cd ${{ secrets.VCM_FRONTEND_DIR }}
             sudo npm install
             sudo npm run build
             sudo rm -rf /var/www
