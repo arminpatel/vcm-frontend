@@ -27,7 +27,11 @@ jobs:
       - name: Copy new changes 
         run: | 
           ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} 'rm -rf ${{ secrets.VCM_FRONTEND_DIR }}/*'
+<<<<<<< HEAD
           scp -o StrictHostKeyChecking=no -r ./* "${{ secrets.VCM_HOST_USERNAME}}@${{ secrets.VCM_HOST_DNS }}:${{ secrets.VCM_FROTEND_DIR }}/"
+=======
+          scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.VCM_HOST_USERNAME}}@${{ secrets.VCM_HOST_DNS }}:${{ secrets.VCM_FROTEND_DIR }}
+>>>>>>> 1a50dd6 (fix path error in deployment yaml)
       - name: Build the changes and deploy
         run: | 
           ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} << EOF
