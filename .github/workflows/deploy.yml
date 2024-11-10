@@ -29,7 +29,6 @@ jobs:
             sudo npm install
             sudo npm run build
             sudo rm -rf /var/www/*
-            sudo rm -rf /var/www/*
             sudo cp -r dist/* /var/www/
             sudo systemctl restart nginx
           EOF
