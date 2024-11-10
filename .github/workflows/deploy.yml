@@ -21,13 +21,13 @@ jobs:
       - name: Pull New Changes
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} << EOF
-            sudo cd ${{ secrets.VCM_FRONTEND_DIR }} 
+            cd ${{ secrets.VCM_FRONTEND_DIR }} 
             sudo git pull origin main
           EOF
       - name: Build the changes and deploy
         run: | 
           ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} << EOF
-            sudo cd ${{ secrets.VCM_FRONTEND_DIR }}
+            cd ${{ secrets.VCM_FRONTEND_DIR }}
             sudo npm install --legacy-peer-deps
             sudo npm run build
             sudo rm -rf /var/www/*
