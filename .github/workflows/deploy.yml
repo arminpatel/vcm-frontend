@@ -19,7 +19,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_VCM }}
 
       - name: Pull New Changes
-        run: | 
+        run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} 'sudo cd ${{secrets.VCM_FRONTEND_DIR}} 
           && sudo git pull origin main'
       - name: Build the changes and deploy
