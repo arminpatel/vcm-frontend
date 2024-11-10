@@ -19,6 +19,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_VCM }}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       - name: Pull New Changes
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} 'sudo cd ${{secrets.VCM_FRONTEND_DIR}} 
@@ -32,13 +33,18 @@ jobs:
 =======
           scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.VCM_HOST_USERNAME}}@${{ secrets.VCM_HOST_DNS }}:${{ secrets.VCM_FROTEND_DIR }}
 >>>>>>> 1a50dd6 (fix path error in deployment yaml)
+=======
+      - name: Pull New Changes
+        run: | 
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} 'sudo cd ${{secrets.VCM_FRONTEND_DIR}} 
+          && sudo git pull origin main'
+>>>>>>> 5b8e8ef (use git pull instead of rote copying)
       - name: Build the changes and deploy
         run: | 
           ssh -o StrictHostKeyChecking=no ${{ secrets.VCM_HOST_USERNAME }}@${{ secrets.VCM_HOST_DNS }} << EOF
             sudo cd ${{ secrets.VCM_FRONTEND_DIR }}
             sudo npm install --legacy-peer-deps
             sudo npm run build
-            sudo rm -rf /var/www/*
             sudo rm -rf /var/www/*
             sudo cp -r dist/* /var/www/
             sudo systemctl restart nginx
